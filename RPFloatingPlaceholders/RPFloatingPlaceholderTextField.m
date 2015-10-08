@@ -147,13 +147,16 @@
     
     // Forces drawRect to be called when the bounds change
     self.contentMode = UIViewContentModeRedraw;
-
+    
     // Set the default animation direction
     self.animationDirection = RPFloatingPlaceholderAnimateUpward;
     
     // Create the floating label instance and add it to the view
     self.floatingLabel = [[UILabel alloc] init];
-    self.floatingLabel.font = [UIFont boldSystemFontOfSize:11.f];
+    
+    UIFontDescriptor *boldDesciptor = [self.font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    
+    self.floatingLabel.font = [UIFont fontWithDescriptor:boldDesciptor size:round(self.font.pointSize * 0.75)];
     self.floatingLabel.textAlignment = self.textAlignment;
     self.floatingLabel.backgroundColor = [UIColor clearColor];
     self.floatingLabel.alpha = 1.f;
@@ -297,7 +300,7 @@
     
     CGFloat offset = ceil(self.floatingLabel.font.lineHeight);
     
-    self.originalFloatingLabelFrame = CGRectMake(self.originalTextFieldFrame.origin.x + 5.f, self.originalTextFieldFrame.origin.y,
+    self.originalFloatingLabelFrame = CGRectMake(self.originalTextFieldFrame.origin.x + 5.f, round(self.originalTextFieldFrame.origin.y - self.floatingLabel.frame.size.height / 2.0),
                                                  self.originalTextFieldFrame.size.width - 10.f, self.floatingLabel.frame.size.height);
     self.floatingLabel.frame = self.originalFloatingLabelFrame;
     
